@@ -90,6 +90,18 @@ class CurrencyConverter(QDialog):
             rates.append(self.data[currency][date])
         return rates
 
+    @staticmethod
+    def get_conversion_rate(rates_from, rates_to):
+        rates_cv = []
+        i = 0
+        while i < len(rates_from):
+            if rates_from[i] == 0 or rates_to[i] == 0:
+                return []
+            # TODO amount ?
+            rates_cv.append(rates_from[i] / rates_to[i])
+            i += 1
+        return rates_cv
+
     def update_ui(self):
         try:
             # refresh ui
@@ -111,7 +123,10 @@ class CurrencyConverter(QDialog):
             self.set_period(from_date, to_date)
             rates_from = self.get_rates(from_cur)
             rates_to = self.get_rates(to_cur)
+            rates_cv = self.get_conversion_rate(rates_from, rates_to)
             
+            # debug
+            '''
             print("\n")
             print(self.period)
             print("\n")
@@ -119,6 +134,9 @@ class CurrencyConverter(QDialog):
             print("\n")
             print(rates_to)
             print("\n")
+            print(rates_to)
+            print("\n")
+            '''
     
             self.graph.clear()
             self.legend.scene().removeItem(self.legend)
@@ -128,11 +146,18 @@ class CurrencyConverter(QDialog):
             self.graph.setLabel('bottom', 'Days')
             date_range = range(0, len(self.period))
             self.graph.setXRange(0, len(self.period) - 1)
-            min_ = min(min(rates_from), min(rates_to))
-            max_ = max(max(rates_from), max(rates_to))
+            if len(rates_cv) > 0:
+                min_ = min(min(rates_from), min(rates_to), min(rates_cv))
+                max_ = max(max(rates_from), max(rates_to), max(rates_cv))
+            else:
+                min_ = min(min(rates_from), min(rates_to))
+                max_ = max(max(rates_from), max(rates_to))
             self.graph.setYRange(min_, max_)
-            self.graph.plot(date_range, rates_from, pen='g', symbol='o', symbolPen='g', symbolBrush=0.2, name=from_cur)
-            self.graph.plot(date_range, rates_to, pen='r', symbol='o', symbolPen='r', symbolBrush=0.2, name=to_cur)
+            
+            self.graph.plot(date_range, rates_from, pen='b', symbol='o', symbolPen='b', symbolBrush=0.2, name=from_cur)
+            self.graph.plot(date_range, rates_to, pen='g', symbol='x', symbolPen='g', symbolBrush=0.2, name=to_cur)
+            if len(rates_cv) > 0:
+                self.graph.plot(date_range, rates_cv, pen="r", symbol='+', symbolPen='r', symbolBrush=0.2, name="conversion rate")
             
         except Exception as e:
             print(e)
