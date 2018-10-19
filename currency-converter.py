@@ -122,6 +122,7 @@ class CurrencyConverter(QDialog):
             amount = self.from_amount.value()
             if from_rate > 0 and to_rate > 0:
                 res = (to_rate / from_rate) * amount
+                res = round(res, 2)
                 self.to_amount.setText("%.02f" % res)
             else:
                 self.to_amount.setText("no data")
