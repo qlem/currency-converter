@@ -1,8 +1,6 @@
 import sys
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QComboBox, QDoubleSpinBox, QCalendarWidget, QDialog, QApplication, QGridLayout
-from PyQt5 import QtCore
-from decimal import Decimal
 from urllib.request import urlretrieve
 import zipfile
 import pyqtgraph as pg
@@ -135,17 +133,6 @@ class CurrencyConverter(QDialog):
             rates_from = self.get_rates(from_cur)
             rates_to = self.get_rates(to_cur)
             rates_cv = self.get_conversion_rates(rates_from, rates_to)
-
-            # debug
-            print("\n")
-            print(self.period)
-            print("\n")
-            print(rates_from)
-            print("\n")
-            print(rates_to)
-            print("\n")
-            print(rates_cv)
-            print("\n")
 
             # clear plots and legend
             self.rates_plot.clear()
