@@ -1,5 +1,5 @@
 # Currency Converter
 Written in python. Use Qt.
 ## Screenshots
-![alt text](screenshotO1.png)
-![alt text](screenshotO2.png)
+![alt text](https://raw.githubusercontent.com/qlem/currency-converter/master/screenshot01.png)
+![alt text](https://raw.githubusercontent.com/qlem/currency-converter/master/screenshot02.png)
