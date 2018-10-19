@@ -94,7 +94,7 @@ class CurrencyConverter(QDialog):
             rates.append(self.data[currency][date])
         return rates
 
-    # Method that return conversion rates according to the two selected currencies
+    # Method that return conversion rates according to the rates of the two selected currencies
     @staticmethod
     def get_conversion_rates(rates_from, rates_to):
         rates_cv = []
